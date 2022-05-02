@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="autoComplete_wrapper">
+        <input id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off"
+            autocapitalize="off">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
+    <script type="module">
+        // const jsonData = require("./out.out");
+        // // $.getJSON("test.json", function (json) {
+        // //     console.log(json.keys()); // this will show the info it in firebug console
+        // // });
+
+        // console.log(jsonData.keys());
+
+        fetch("./out.json")
+            .then(response => {
+                return response.json();
+            })
+            .then(jsondata => {
+                const autoCompleteJS = new autoComplete({
+                    placeHolder: "Search for Potty...",
+                    data: {
+                        src: jsondata["names"],
+                        cache: true,
+                    },
+                    resultItem: {
+                        highlight: true
+                    },
+                    events: {
+                        input: {
+                            selection: (event) => {
+                                const selection = event.detail.selection.value;
+                                autoCompleteJS.input.value = selection;
+                            }
+                        }
+                    }
+                });
+            });
+
+
+    </script>
+</body>
+
+</html>
